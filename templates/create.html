@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+<head>
+    {% block title %}Create{% endblock %}
+</head>
+<body>
+    {% block content %}
+    <div class="container mt-3">
+        <form method="post" class="form-group">
+            <input type="text" name="title" id="title" class="form-control mb-3" placeholder="Title">
+            <textarea name="body" id="body" cols="30" rows="10" class="form-control" placeholder="Text"></textarea>
+            <input type="submit" value="Submit" class="btn btn-primary mt-3">
+        </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

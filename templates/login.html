@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+    {% block title %}Login{% endblock %}
+
+    {% block content %}
+    <div class="container mt-3">
+        <form method="post" class="form-group">
+            <input type="text" class="form-control mb-3" name="username" placeholder="Username" required>
+            <input type="password" class="form-control" name="password" placeholder="Password" required>
+            <input type="submit" value="Log In" class="btn btn-primary mt-3">
+        </form>
+    </div>
+
+    {% endblock %}
