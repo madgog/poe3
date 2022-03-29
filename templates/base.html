@@ -26,9 +26,10 @@
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                 <i class="far fa-user"></i> {{ user.username }}</a>
                             <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="/create"><i class="fas fa-plus"></i> New Post</a></li>
-                              <hr>
-                              <li><a class="dropdown-item" href="/logout">Logout <i class="fas fa-sign-out-alt"></i></a></li>
+                                <li><a class="dropdown-item" href="/myposts">My posts</a></li>
+                                <li><a class="dropdown-item" href="/create"><i class="fas fa-plus"></i> New Post</a></li>
+                                <hr>
+                                <li><a class="dropdown-item" href="/logout">Logout <i class="fas fa-sign-out-alt"></i></a></li>
                             </ul>
                           </li>
                 </div>
@@ -42,12 +43,29 @@
 </head>
 <body>
     <div class="container">
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for msg in messages %}
-                    <div class="alert alert-info mt-3">
-                        {{ msg }}
-                    </div>
+                {% for category, msg in messages %}
+                    {% if category == 'success' %}
+                        <div class="alert alert-success mt-3">
+                            {{ msg }}
+                        </div>
+                    {% endif %}
+                    {% if category == 'error' %}
+                        <div class="alert alert-danger mt-3">
+                            {{ msg }}
+                        </div>
+                    {% endif %}
+                    {% if category == 'info' %}
+                        <div class="alert alert-info mt-3">
+                            {{ msg }}
+                        </div>
+                    {% endif %}
+                    {% if category == 'warning' %}
+                        <div class="alert alert-warning mt-3">
+                            {{ msg }}
+                        </div>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         {% endwith %}

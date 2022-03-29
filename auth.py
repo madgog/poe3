@@ -65,5 +65,5 @@ def register():
 @login_required
 def logout():
     logout_user()
-    flash('You have been logout')
+    flash('You have been logout', category='warning')
     return redirect(url_for('auth.login'))

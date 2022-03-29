@@ -1,29 +1,24 @@
 {% extends "base.html" %}
-<head>
-    {% block title %}Home{% endblock %}
-</head>
-<body>
-    {% block content %}
-    <div class="container mt-5">
-        <table class="table table-sm table-hover">
-                <thead class="thead-dark">
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container mt-3">
+    <table class="table table-sm table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in all_posts %}
                     <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">Author</th>
-                        <th scope="col">Created</th>
+                        <th scope="row"><a href="{{ url_for('post.post_view', id=post['id']) }}">{{ post.title }}</a></th>
+                        <td>{{ post.author.username }}</td>
+                        <td>{{ post.created }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for post in all_posts %}
-                        <tr>
-                            <th scope="row"><a href="{{ url_for('post.post_view', id=post['id']) }}">{{ post.title }}</a></th>
-                            <td>{{ post.author.username }}</td>
-                            <td>{{ post.created }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-        </table>
-    </div>
-    {% endblock %}
-</body>
-</html>
+                {% endfor %}
+            </tbody>
+    </table>
+</div>
+{% endblock %}

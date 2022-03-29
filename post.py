@@ -2,7 +2,7 @@ from . import db
 from .model import Post, Vote
 from werkzeug.exceptions import abort
 from flask_login import login_required, current_user
-from flask import Blueprint, redirect, render_template, url_for, flash, request
+from flask import Blueprint, redirect, render_template, url_for, flash, request, Markup
 
 
 post = Blueprint('post', __name__)
@@ -62,6 +62,15 @@ def search():
     return render_template('search.html', user=current_user, posts=posts)
 
 
+# My posts/User's posts
+@post.route('/myposts', methods=['GET','POST'])
+def myposts():
+    my_posts = Post.query.filter_by(author_id=current_user.id).all()
+    if not my_posts:
+        flash(Markup('You have no posts. <a class="" href="/create">Create a Post</a>'), category='info')
+    return render_template('myposts.html', user=current_user, my_posts=my_posts)
+
+
 # Create new post
 @post.route('/create', methods=['GET','POST'])
 @login_required
@@ -117,11 +126,12 @@ def delete(id):
     db.session.commit()
     flash('Post was deleted!', category='success')
 
-    return redirect(url_for('home'))
+    return redirect(url_for('post.home'))
 
 
 # Voting system
 @post.route('/post/<int:id>/vote', methods=['GET','POST'])
+@login_required
 def votes(id):
     post_id = get_post(id, check_autor=False).id
     user_id = current_user.id
@@ -134,12 +144,13 @@ def votes(id):
     return redirect(url_for('post.post_view', id=post_id))
 
 @post.route('/post/<int:id>/dislike')
+@login_required
 def dislike(id):
     post_id = request.args.get('post_id')
     like = Vote.query.get(id)
 
     db.session.delete(like)
     db.session.commit()
-    flash('Disliked!', category='info')
+    flash('Disliked!', category='warning')
 
     return redirect(url_for('post.post_view', id=post_id))

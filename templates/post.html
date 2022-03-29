@@ -16,9 +16,9 @@
         </div>
         
     </div>
+    <hr>
         {% if user.is_authenticated %}
             {% if user.id==post.author.id %}
-                <hr>
                 <a class="btn btn-info" href="{{ url_for('post.update', id=post['id']) }}">Edit</a>
                 <a class="btn btn-danger" href="{{ url_for('post.delete', id=post['id']) }}">Delete</a>
             {% endif %}
